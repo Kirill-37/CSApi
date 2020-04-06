@@ -10,13 +10,15 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import RealmSwift
 
 //MARK: HW2 API vk.com
 
 
 class VKApi {
 
-
+    let db = DataBase()
+    
     let vkURL = "https://api.vk.com/method/"
     
     func getFriends(token: String, completion: @escaping ([Friends]) -> Void) {
@@ -39,9 +41,17 @@ class VKApi {
                               } else {
                                   guard let data = response.data else { return }
                                   
-                                var friend = self.parseFriends(data: data)
-                                print(friend)
-                                completion(friend)
+                                let friend: [Friends] = self.parseFriends(data: data)
+                                
+                                do{
+                                    try self.db.save(friends: friend)
+                                } catch {
+                                    print("Error while saving users to db")
+                                    }
+                                    
+                                    print(self.db.loadFriends())
+                                    
+                                    completion(friend)
                                 }
 
             }

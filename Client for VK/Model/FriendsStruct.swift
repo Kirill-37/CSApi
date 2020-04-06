@@ -6,15 +6,15 @@
 //  Copyright © 2019 Кирилл Харузин. All rights reserved.
 //
 
-import Foundation
+import RealmSwift
 import UIKit
 
 
-class Friends {
-    var id: Int = 0
-    var name: String = ""
-    var surname: String = ""
-    var photo: String = ""
+class Friends: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var surname: String = ""
+    @objc dynamic var photo: String = ""
 }
 
 

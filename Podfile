@@ -7,6 +7,7 @@ target 'Client for VK' do
 
 pod 'Alamofire'
 pod 'SwiftyJSON'
+pod 'RealmSwift'
 
   # Pods for Client for VK
 

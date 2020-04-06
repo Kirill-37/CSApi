@@ -6,14 +6,14 @@
 //  Copyright © 2019 Кирилл Харузин. All rights reserved.
 //
 
-import Foundation
+import RealmSwift
 import UIKit
 
-class Groups {
-    var id: Int = 0
-    var name: String = ""
-    var photo: String = ""
-    var type: String = ""
+class Groups: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var photo: String = ""
+    @objc dynamic var type: String = ""
 }
 
 

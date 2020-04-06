@@ -27,6 +27,7 @@
 		F16BDD7223A375B600EE8B37 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16BDD7123A375B600EE8B37 /* Like.swift */; };
 		F173D2EB2399B675007CA032 /* FriendsStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F173D2EA2399B675007CA032 /* FriendsStruct.swift */; };
 		F173D2ED2399BA61007CA032 /* GroupsStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F173D2EC2399BA61007CA032 /* GroupsStruct.swift */; };
+		F1A0D9DF243B95D500AD4572 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0D9DE243B95D500AD4572 /* DataBase.swift */; };
 		F1AC312923A81696003E14B4 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC312823A81696003E14B4 /* MessageViewController.swift */; };
 		F1AC312D23A8174E003E14B4 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC312B23A8174E003E14B4 /* MessageCell.swift */; };
 		F1AC312E23A8174E003E14B4 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1AC312C23A8174E003E14B4 /* MessageCell.xib */; };
@@ -86,6 +87,7 @@
 		F16BDD7123A375B600EE8B37 /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		F173D2EA2399B675007CA032 /* FriendsStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStruct.swift; sourceTree = "<group>"; };
 		F173D2EC2399BA61007CA032 /* GroupsStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsStruct.swift; sourceTree = "<group>"; };
+		F1A0D9DE243B95D500AD4572 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		F1AC312823A81696003E14B4 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		F1AC312B23A8174E003E14B4 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		F1AC312C23A8174E003E14B4 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		F126CD44238D673D00730FDA /* Client for VK */ = {
 			isa = PBXGroup;
 			children = (
+				F1A0D9DD243B95B900AD4572 /* DataBase */,
 				F12EA7D923DECFC0001C607C /* Screens */,
 				F12EA7D823DECCE3001C607C /* Api */,
 				F12EA7D723DECCAB001C607C /* Transition Animation */,
@@ -285,6 +288,14 @@
 				F14EC2DF2433379D0026E320 /* PhotosStruct.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		F1A0D9DD243B95B900AD4572 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				F1A0D9DE243B95D500AD4572 /* DataBase.swift */,
+			);
+			path = DataBase;
 			sourceTree = "<group>";
 		};
 		F1AC312723A81646003E14B4 /* Message Screen */ = {
@@ -507,6 +518,7 @@
 				F126CD4A238D673D00730FDA /* LoginViewController.swift in Sources */,
 				F1634BF023A3A77800F9B59F /* CircleImage.swift in Sources */,
 				F148C3ED23DEEF540072376F /* VKApi.swift in Sources */,
+				F1A0D9DF243B95D500AD4572 /* DataBase.swift in Sources */,
 				F126CD46238D673D00730FDA /* AppDelegate.swift in Sources */,
 				F173D2EB2399B675007CA032 /* FriendsStruct.swift in Sources */,
 				F14EC2E02433379D0026E320 /* PhotosStruct.swift in Sources */,

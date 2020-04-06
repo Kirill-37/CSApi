@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import RealmSwift
 
 
 class FriendList: UITableViewController{
@@ -74,23 +75,43 @@ override func numberOfSections(in tableView: UITableView) -> Int {
             return friendsForSection.count
         }
         
+    let queue = DispatchQueue(label: "Friends_avatar_download_queue")
+    
+    private func downloadImage( for url: String, indexPath: IndexPath ) {
+        queue.async {
+            if self.cachedAvatars[url] == nil {
+                if let image = self.vkAPI.getImageByURL(imageUrl: url) {
+                    self.cachedAvatars[url] = image
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                        
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }
+        }
+    }
        
        override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
            guard let cell = tableView.dequeueReusableCell(withIdentifier: "FriendTemplate", for: indexPath) as? FriendCell else {
                return UITableViewCell()
            }
+        
         cell.username.text = friendList[indexPath.row].name + " " + friendList[indexPath.row].surname
-        DispatchQueue.global().async {
-            let image = self.vkAPI.getImageByURL(imageUrl: self.friendList[indexPath.row].photo)
-            DispatchQueue.main.async {
-                cell.avatar.image = image
-            }
+        
+        let url = friendList[indexPath.row].photo
+        if let cashed = cachedAvatars[url] {
+            cell.avatar.image = cashed
+        } else {
+            downloadImage(for: url, indexPath: indexPath)
         }
-        
-        
-           
-           return cell
-       }
+            
+            return cell
+        }
        
       override func tableView(_ tableView: UITableView,
                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?

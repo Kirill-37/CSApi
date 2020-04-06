@@ -6,10 +6,11 @@
 //  Copyright © 2020 Кирилл Харузин. All rights reserved.
 //
 
-import Foundation
+import RealmSwift
+import UIKit
 
-class Photos {
-    var id: Int = 0
-    var ownerID: Int = 0
-    var imageURL: String = ""
+class Photos: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var ownerID: Int = 0
+    @objc dynamic var imageURL: String = ""
 }
