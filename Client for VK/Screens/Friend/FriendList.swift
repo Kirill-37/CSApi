@@ -27,8 +27,8 @@ class FriendList: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        vkAPI.getFriends(token: UserSession.shared.token) { (friend) in
-            self.friendList = friend
+        vkAPI.getFriends(token: UserSession.shared.token) { () in
+            self.loadFriends()
             self.friendsSection = self.makeSortedSections(friendsArray: self.friendList)
             self.friendsNameArray = self.friendList
             self.tableView.reloadData()
@@ -38,6 +38,18 @@ class FriendList: UITableViewController{
         let hideAction = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(hideAction)
     
+    }
+    
+    func loadFriends() {
+        do {
+            let realm = try Realm()
+            let friends = realm.objects(Friends.self)
+            friendList = Array( friends )
+            
+        }
+        catch {
+            print(error.localizedDescription)
+        }
     }
     
     //Скрытие клавиатуры при тапе в любое место экрана

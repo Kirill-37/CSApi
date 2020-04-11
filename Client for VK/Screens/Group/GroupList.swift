@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 
 class GroupList: UITableViewController {
@@ -16,13 +17,15 @@ class GroupList: UITableViewController {
     var groupList: [Groups] = []
     var vkApi = VKApi()
     
+    var cachedAvatars = [String: UIImage]()
+    
     
        override func viewDidLoad() {
         super.viewDidLoad()
     
         
-        vkApi.getGroups(token: UserSession.shared.token) { (groups) in
-            self.groupList = groups
+        vkApi.getGroups(token: UserSession.shared.token) { () in
+            self.loadData()
             self.tableView.reloadData()
         }
         
@@ -32,6 +35,19 @@ class GroupList: UITableViewController {
         //makeSortedSections()
         
         }
+    
+    func loadData() {
+        do {
+            let realm = try Realm()
+            let groups = realm.objects(Groups.self)
+            groupList = Array( groups )
+            
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     
     //Скрытие клавиатуры при тапе в любое место экрана
     @objc func hideKeyboard() {
@@ -47,22 +63,41 @@ class GroupList: UITableViewController {
            return groupList.count
        }
        
+       let queue = DispatchQueue(label: "Groupss_avatar_download_queue")
        
-       override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTemplate", for: indexPath) as? GroupCell else {
-               return UITableViewCell()
+       private func downloadImage( for url: String, indexPath: IndexPath ) {
+           queue.async {
+               if self.cachedAvatars[url] == nil {
+                if let image = self.vkApi.getImageByURL(imageUrl: url ) {
+                       self.cachedAvatars[url] = image
+                       
+                       DispatchQueue.main.async {
+                           self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                       }
+                   }
+               } else {
+                   DispatchQueue.main.async {
+                       self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                   }
+               }
            }
-           cell.groupId.text = groupList[indexPath.row].name
-        DispatchQueue.global().async {
-            let image = self.vkApi.getImageByURL(imageUrl: self.groupList[indexPath.row].photo)
-            DispatchQueue.main.async {
-                cell.groupAva.image = image
-            }
+       }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTemplate", for: indexPath) as? GroupCell else {
+            return UITableViewCell()
+        }
+        cell.groupId.text = groupList[indexPath.row].name
+        
+        
+        let url = groupList[indexPath.row].photo
+        if let cashed = cachedAvatars[url] {
+            cell.groupAva.image = cashed
+        } else {
+            downloadImage(for: url, indexPath: indexPath)
         }
         
-           
-           return cell
-       }
+        return cell
+    }
        
       override func tableView(_ tableView: UITableView,
                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?

@@ -12,23 +12,25 @@ import RealmSwift
 class DataBase {
     
     func save(friends: [Friends]) throws {
-        let realm = try Realm()
         
+        Realm.Configuration.defaultConfiguration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try Realm()
+        print(realm.configuration.fileURL)
         realm.beginWrite()
-        realm.add(friends)
+        realm.add(friends, update: .modified)
         try realm.commitWrite()
     }
 
-    func loadFriends() -> [Friends] {
-        do {
-            let realm = try Realm()
-            let objects = realm.objects(Friends.self)
-            return Array(objects)
+    
+
+    func saveGroups(groups: [Groups]) throws {
             
-        } catch {
-            return []
+            let realm = try Realm()
+            realm.beginWrite()
+            realm.add(groups, update: .modified)
+            try realm.commitWrite()
         }
 
-    }
+        
 }
 

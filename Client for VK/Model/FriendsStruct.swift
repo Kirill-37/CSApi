@@ -15,7 +15,9 @@ class Friends: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var surname: String = ""
     @objc dynamic var photo: String = ""
+    var groups = List<Groups>()
+
+override class func primaryKey() -> String? {
+       return "id"
+   }
 }
-
-
-

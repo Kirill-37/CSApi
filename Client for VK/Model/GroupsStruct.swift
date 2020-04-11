@@ -14,6 +14,10 @@ class Groups: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var photo: String = ""
     @objc dynamic var type: String = ""
+    
+    override class func primaryKey() -> String? {
+           return "id"
+       }
 }
 
 

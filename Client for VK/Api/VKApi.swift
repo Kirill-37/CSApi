@@ -14,14 +14,13 @@ import RealmSwift
 
 //MARK: HW2 API vk.com
 
-
 class VKApi {
 
     let db = DataBase()
     
     let vkURL = "https://api.vk.com/method/"
     
-    func getFriends(token: String, completion: @escaping ([Friends]) -> Void) {
+    func getFriends(token: String, completion: @escaping () -> Void) {
         
         let path = "friends.get"
         
@@ -49,16 +48,16 @@ class VKApi {
                                     print("Error while saving users to db")
                                     }
                                     
-                                    print(self.db.loadFriends())
+                                    //print(self.db.loadFriends())
                                     
-                                    completion(friend)
+                                    completion()
                                 }
 
             }
         }
     
     
-    func getGroups(token: String, completion: @escaping ([Groups]) -> Void) {
+    func getGroups(token: String, completion: @escaping () -> Void) {
         
             let path = "groups.get"
         
@@ -80,8 +79,14 @@ class VKApi {
                                   
                                 let groups = self.parseGroups(data: data)
                                 print(groups)
-                                  
-                                  completion(groups)
+                                
+                                do{
+                                    try self.db.saveGroups(groups: groups)
+                                } catch {
+                                    print("Error while saving users to db")
+                                    }
+                                 // print(self.db.loadGroups())
+                                  completion()
                               }
         }
     }
@@ -105,10 +110,10 @@ class VKApi {
                               } else {
                                   guard let data = response.data else { return }
                                   
-                                  let photos = self.parseFriends(data: data)
+                                  let photos = self.parsePhotos(data: data)
                                     print(photos)
                                       
-                                      completion([])
+                                      completion(photos)
                                   }
         }
     }
