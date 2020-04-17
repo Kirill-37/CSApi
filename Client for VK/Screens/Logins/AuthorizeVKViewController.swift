@@ -11,6 +11,7 @@ import WebKit
 import UIKit
 import Alamofire
 
+
 class AuthorizeVKViewController: UIViewController {
     @IBOutlet private weak var webView: WKWebView!
         
@@ -48,6 +49,7 @@ class AuthorizeVKViewController: UIViewController {
            }
            
        }
+    
     
 }
 

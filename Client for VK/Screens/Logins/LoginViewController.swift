@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -50,6 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         login.delegate = self
         password.delegate = self
+        //createFriends()
     }
     
     //Скрытие клавиатуры при тапе в любое место экрана
@@ -72,6 +74,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         return false
     }
+    /*func createFriends() {
+        let friends = []
+            .enumerated().map { (offset, value) -> Friends in
+                let friend = Friends()
+                friend.id = offset
+                friend.name = value as! String
+                return friend
+        }
+        
+        do {
+            Realm.Configuration.defaultConfiguration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+            let realm = try Realm()
+            print(realm.configuration.fileURL)
+            realm.beginWrite()
+            realm.add(friends, update: .modified)
+            try realm.commitWrite()
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+        
+    }*/
     
 }
 

@@ -12,15 +12,14 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
-//MARK: HW2 API vk.com
+
 
 class VKApi {
 
-    let db = DataBase()
     
     let vkURL = "https://api.vk.com/method/"
     
-    func getFriends(token: String, completion: @escaping () -> Void) {
+    func getFriends(token: String) {
         
         let path = "friends.get"
         
@@ -34,30 +33,26 @@ class VKApi {
         
             AF.request(requestURL,
                               method: .post,
-                              parameters: params).responseJSON { [completion] (response) in
+                              parameters: params).responseJSON { (response) in
                               if let error = response.error {
                                   print(error)
                               } else {
                                   guard let data = response.data else { return }
                                   
-                                let friend: [Friends] = self.parseFriends(data: data)
+                                let friends: [Friends] = self.parseFriends(data: data)
                                 
                                 do{
-                                    try self.db.save(friends: friend)
+                                    try DataBaseService.saveFriends(friends: friends)
                                 } catch {
                                     print("Error while saving users to db")
                                     }
-                                    
-                                    //print(self.db.loadFriends())
-                                    
-                                    completion()
                                 }
 
             }
         }
     
     
-    func getGroups(token: String, completion: @escaping () -> Void) {
+    func getGroups(token: String) {
         
             let path = "groups.get"
         
@@ -71,7 +66,7 @@ class VKApi {
         let requestURL = vkURL + path
             AF.request(requestURL,
                               method: .post,
-                              parameters: params).responseJSON { [completion] (response) in
+                              parameters: params).responseJSON { (response) in
                               if let error = response.error {
                                   print(error)
                               } else {
@@ -81,12 +76,10 @@ class VKApi {
                                 print(groups)
                                 
                                 do{
-                                    try self.db.saveGroups(groups: groups)
+                                    try DataBaseService.saveGroups(groups: groups)
                                 } catch {
                                     print("Error while saving users to db")
                                     }
-                                 // print(self.db.loadGroups())
-                                  completion()
                               }
         }
     }
